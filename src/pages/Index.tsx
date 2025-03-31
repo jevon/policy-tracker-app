@@ -156,24 +156,33 @@ const Index = () => {
         swipeDirection={swipeDirection}
       />
       <div className="container mx-auto px-4 mt-6">
-        <div className="mb-12 text-center">
+        <div className="mb-6 text-center">
           <div className="inline-block px-3 py-1 bg-rose/20 backdrop-blur-sm rounded-full text-gray-800 text-sm font-medium mb-4 animate-fade-in">
             2025 FEDERAL ELECTION REALTIME PLATFORMS
           </div>
           <h2 className="text-3xl md:text-4xl font-bebas tracking-wide mb-4 animate-fade-in">
-            WHO PROMISED WHAT?
+            CAMPAIGN PLATFORM TRACKER
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-montserrat animate-fade-in">
-            Compare the campaign promises made by Mark Carney and Pierre Poilievre. 
-            Each promise includes a description, quote, and transcript link.
+            Comprehensive analysis of policy commitments by Mark Carney and Pierre Poilievre. 
+            Each entry includes official statements, source documentation, and reference links.
           </p>
-          <a 
-            href="/how-it-works" 
-            className="inline-block mt-4 text-gray-500 hover:text-gray-700 text-sm font-montserrat transition-colors duration-200 animate-fade-in"
-            style={{ animationDelay: '0.8s' }}
-          >
-            How does this work? →
-          </a>
+          <div className="flex justify-center gap-6 mt-4">
+            <a 
+              href="/how-it-works" 
+              className="inline-block text-gray-500 hover:text-gray-700 text-sm font-montserrat transition-colors duration-200 animate-fade-in"
+              style={{ animationDelay: '0.8s' }}
+            >
+              How does this work? →
+            </a>
+            <a 
+              href="/why-important" 
+              className="inline-block text-gray-500 hover:text-gray-700 text-sm font-montserrat transition-colors duration-200 animate-fade-in"
+              style={{ animationDelay: '0.9s' }}
+            >
+              Why is this important? →
+            </a>
+          </div>
         </div>
         
         <TopicComparison 
@@ -183,6 +192,7 @@ const Index = () => {
           setSelectedCategory={setSelectedCategory}
         />
         
+        {/* Temporarily removed search bar
         <PromiseSearch 
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -190,6 +200,7 @@ const Index = () => {
           setSelectedCategory={setSelectedCategory}
           categories={allCategories}
         />
+        */}
         
         <div className="flex flex-col lg:flex-row gap-8">
           <div className={`w-full lg:w-1/2 transition-all duration-300 ${activePolitician === 'carney' ? 'block' : 'hidden lg:block'}`}>
