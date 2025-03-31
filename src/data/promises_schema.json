@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Political Promises",
+  "description": "A schema for political promises and commitments extracted from transcripts",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "description",
+      "quote",
+      "category",
+      "confidence_level",
+      "transcript_id", 
+      "transcript_title",
+      "transcript_date",
+      "transcript_url"
+    ],
+    "properties": {
+      "description": {
+        "type": "string",
+        "description": "A short description of the promise or commitment",
+        "minLength": 5,
+        "maxLength": 200,
+        "examples": [
+          "Commitment to use every dollar collected from retaliatory tariffs to support workers",
+          "Elimination of GST for first-time home buyers"
+        ]
+      },
+      "quote": {
+        "type": "string",
+        "description": "The exact quote from the transcript containing the promise",
+        "minLength": 10,
+        "examples": [
+          "we made a commitment a few weeks ago to use every dollar that we collect from inator tariffs to support workers to directly go to support workers",
+          "We are eliminating GST for first-time home buyers and that is a savings of up to $50,000 off the price of the home."
+        ]
+      },
+      "category": {
+        "type": "string",
+        "description": "The policy category of the promise",
+        "enum": [
+          "Economy", 
+          "Healthcare", 
+          "Environment", 
+          "Defense", 
+          "Education", 
+          "Immigration", 
+          "Housing", 
+          "Other"
+        ]
+      },
+      "confidence_level": {
+        "type": "string",
+        "description": "Confidence level in this being a genuine promise or commitment",
+        "enum": ["High", "Medium", "Low"]
+      },
+      "transcript_id": {
+        "type": "string",
+        "description": "The YouTube video ID from which the promise was extracted",
+        "pattern": "^[\\w-]+$",
+        "examples": ["3qDKNHm95Gs", "HkpzLy-rIJY"]
+      },
+      "transcript_title": {
+        "type": "string",
+        "description": "The title of the transcript/video",
+        "minLength": 5,
+        "examples": [
+          "Carney fires back after Trump's auto tariff announcement | 'We will defend our country'",
+          "Liberal Leader Mark Carney pledges to bolster Canada's defence capabilities – March 25, 2025"
+        ]
+      },
+      "transcript_date": {
+        "type": "string",
+        "description": "The date of the transcript/video in YYYY-MM-DD format",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+        "examples": ["2025-03-26", "2025-03-25"]
+      },
+      "transcript_url": {
+        "type": "string",
+        "description": "The URL to the original YouTube video",
+        "format": "uri",
+        "pattern": "^https://www\\.youtube\\.com/watch\\?v=[\\w-]+$",
+        "examples": [
+          "https://www.youtube.com/watch?v=3qDKNHm95Gs", 
+          "https://www.youtube.com/watch?v=HkpzLy-rIJY"
+        ]
+      },
+      "timestamp": {
+        "type": "string",
+        "description": "The timestamp in the video where the promise is made (HH:MM:SS format)",
+        "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
+        "examples": ["00:05:32", "01:23:45"]
+      },
+      "timestamp_seconds": {
+        "type": "number",
+        "description": "The timestamp in seconds from the start of the video where the promise is made",
+        "minimum": 0,
+        "examples": [332, 5025]
+      },
+      "timestamp_url": {
+        "type": "string",
+        "description": "Direct URL to the specific timestamp in the YouTube video",
+        "format": "uri",
+        "pattern": "^https://www\\.youtube\\.com/watch\\?v=[\\w-]+&t=\\d+s$",
+        "examples": [
+          "https://www.youtube.com/watch?v=3qDKNHm95Gs&t=332s", 
+          "https://www.youtube.com/watch?v=HkpzLy-rIJY&t=5025s"
+        ]
+      },
+      "politician_id": {
+        "type": "string",
+        "description": "The ID of the politician making the promise (optional, as this can be inferred from the file location)",
+        "examples": ["mark_carney", "pierre_poilievre"]
+      },
+      "tags": {
+        "type": "array",
+        "description": "Optional tags for additional categorization",
+        "items": {
+          "type": "string"
+        },
+        "examples": [
+          ["tax", "relief", "middle class"],
+          ["defense", "nato", "military spending"]
+        ]
+      },
+      "fulfilled": {
+        "type": "boolean",
+        "description": "Optional flag indicating whether the promise has been fulfilled",
+        "default": false
+      },
+      "fulfillment_date": {
+        "type": "string",
+        "description": "Optional date when the promise was fulfilled in YYYY-MM-DD format",
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "fulfillment_evidence": {
+        "type": "string",
+        "description": "Optional evidence or source supporting fulfillment status"
+      }
+    },
+    "additionalProperties": false
+  },
+  "examples": [
+    [
+      {
+        "description": "Commitment to use every dollar collected from retaliatory tariffs to support workers",
+        "quote": "we made a commitment a few weeks ago to use every dollar that we collect from inator tariffs to support workers to directly go to support workers",
+        "category": "Economy",
+        "confidence_level": "High",
+        "transcript_id": "3qDKNHm95Gs",
+        "transcript_title": "Carney fires back after Trump's auto tariff announcement | 'We will defend our country'",
+        "transcript_date": "2025-03-26",
+        "transcript_url": "https://www.youtube.com/watch?v=3qDKNHm95Gs",
+        "timestamp": "00:05:32",
+        "timestamp_seconds": 332,
+        "timestamp_url": "https://www.youtube.com/watch?v=3qDKNHm95Gs&t=332s"
+      },
+      {
+        "description": "Elimination of GST for first-time home buyers",
+        "quote": "We are eliminating GST for first-time home buyers and that is a savings of up to $50,000 off the price of the home.",
+        "category": "Housing",
+        "confidence_level": "High",
+        "transcript_id": "HkpzLy-rIJY",
+        "transcript_title": "Liberal Leader Mark Carney pledges to bolster Canada's defence capabilities – March 25, 2025",
+        "transcript_date": "2025-03-25",
+        "transcript_url": "https://www.youtube.com/watch?v=HkpzLy-rIJY",
+        "timestamp": "01:23:45",
+        "timestamp_seconds": 5025,
+        "timestamp_url": "https://www.youtube.com/watch?v=HkpzLy-rIJY&t=5025s"
+      }
+    ]
+  ]
+}
