@@ -34,7 +34,7 @@ A modern web application that provides an AI-powered comparison of political can
 - **Build Process**: TypeScript
 - **Deployment**: Vercel
 
-## Getting Started
+## Development Workflow
 
 ### Prerequisites
 
@@ -42,7 +42,7 @@ A modern web application that provides an AI-powered comparison of political can
 - npm or yarn
 - Google AI API Key (for Gemini)
 
-### Installation
+### Local Development
 
 1. Clone the repository:
 ```bash
@@ -60,23 +60,40 @@ npm install
 GOOGLE_AI_API_KEY=your_api_key_here
 ```
 
-4. Run the development server:
+4. Generate the comparisons (requires Gemini API key):
+```bash
+npm run generate-comparisons
+```
+
+5. Run the development server:
 ```bash
 npm run dev
 ```
 
 The application will be available at `http://localhost:5173`
 
-### Building for Production
+### Updating Comparisons
 
-1. Generate the comparisons:
+When you want to update the policy comparisons:
+
+1. Make sure your `.env` file has the Gemini API key
+2. Run the comparison generator:
 ```bash
 npm run generate-comparisons
 ```
+3. Review the generated files in `public/data/comparisons/`
+4. Commit the changes to the repository
 
-2. Build the application:
+### Building for Production
+
+1. Build the application:
 ```bash
 npm run build
+```
+
+2. Preview the production build:
+```bash
+npm run preview
 ```
 
 ## Project Structure
@@ -100,8 +117,9 @@ The application is configured for deployment on Vercel:
 
 1. Push your changes to GitHub
 2. Connect your repository to Vercel
-3. Configure environment variables in Vercel
-4. Deploy!
+3. Deploy!
+
+Note: The comparison data is generated locally and committed to the repository. The Vercel deployment will use the pre-generated comparison files, so no API calls are needed during deployment.
 
 ## Contributing
 
