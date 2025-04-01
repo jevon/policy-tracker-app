@@ -1,85 +1,118 @@
-# Policy Explorer
+# Policy Tracker
 
-![Policy Explorer - Carney vs Poilievre](https://github.com/jevon/policy-explorer/blob/main/public/uploads/policy-explorer-header.png?raw=true "Policy Explorer Header")
-
-A web application that tracks and compares political promises made by Canadian leaders Mark Carney and Pierre Poilievre during the 2025 election cycle. The platform allows users to see the exact moment each promise was made through video links and transcript references.
-
-*Last updated: March 27, 2024*
+A modern web application that provides an AI-powered comparison of political candidates' policy positions. Currently focused on comparing Mark Carney and Pierre Poilievre's policy stances across various categories.
 
 ## Features
 
-- Track promises made by Canadian political leaders in real-time
-- Compare promises side-by-side with responsive mobile and desktop views
-- Filter promises by category
-- Search functionality to find specific promises 
-- Each promise includes:
-  - Description
-  - Direct quote
-  - Category
-  - Confidence level
-  - Source transcript with date
-  - Video timestamp link (when available)
-- Mobile-responsive design with swipeable politician views
-- Interactive hover effects and smooth animations
+- 📊 Interactive policy comparisons across multiple categories:
+  - Economy
+  - Housing
+  - Environment
+  - Healthcare
+  - Immigration
+  - Defense
+  - Education
+  - Other
 
-## Tech Stack
+- 🤖 AI-Powered Analysis
+  - Automated identification of key differences and similarities
+  - Smart summarization of policy positions
+  - Citation tracking to source materials
 
-- **Frontend**: React 18 with TypeScript
-- **Routing**: React Router (HashRouter for GitHub Pages compatibility)
-- **Styling**: Tailwind CSS with custom animations and responsive design
-- **Build Tool**: Vite for fast development and optimized production builds
-- **Deployment**: GitHub Pages with automated GitHub Actions workflow
-- **Components**: Custom components with responsive design
+- 💡 User-Friendly Interface
+  - Clean, modern design
+  - Responsive layout for all devices
+  - Collapsible sections for better readability
+  - Interactive category selection
+  - Citation tooltips
 
-## Development
+## Technology Stack
 
+- **Frontend**: React + Vite
+- **Styling**: TailwindCSS
+- **AI Integration**: Google's Gemini AI
+- **Build Process**: TypeScript
+- **Deployment**: Vercel
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Google AI API Key (for Gemini)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-# Install dependencies
+git clone https://github.com/jevon/policy-tracker-app.git
+cd policy-tracker-app
+```
+
+2. Install dependencies:
+```bash
 npm install
+```
 
-# Start development server
+3. Create a `.env` file in the root directory:
+```env
+GOOGLE_AI_API_KEY=your_api_key_here
+```
+
+4. Run the development server:
+```bash
 npm run dev
+```
 
-# Build for production
+The application will be available at `http://localhost:5173`
+
+### Building for Production
+
+1. Generate the comparisons:
+```bash
+npm run generate-comparisons
+```
+
+2. Build the application:
+```bash
 npm run build
-
-# Build for local testing
-npm run build:local
-
-# Preview production build
-npm run preview
 ```
 
 ## Project Structure
 
-- `src/components/` - Reusable UI components
-- `src/pages/` - Page components for different routes
-- `src/data/` - Promise data in JSON format
-- `src/hooks/` - Custom React hooks
-- `public/uploads/` - Static assets like images and backgrounds
-
-## Mobile View
-
-The application features a special mobile view where users can:
-- Switch between politicians by tapping on their names in the header
-- View indicators showing which politician's promises are currently displayed
-- Get a focused view of one politician's promises at a time
+```
+policy-tracker-app/
+├── public/
+│   └── data/
+│       └── comparisons/    # Generated JSON comparison files
+├── src/
+│   ├── components/        # React components
+│   ├── pages/            # Page components
+│   └── schemas/          # JSON schemas for data validation
+└── scripts/
+    └── generate-comparisons.ts  # AI-powered comparison generator
+```
 
 ## Deployment
 
-This project is automatically deployed to GitHub Pages when changes are pushed to the main branch using GitHub Actions.
+The application is configured for deployment on Vercel:
 
-The deployment workflow:
-1. Builds the React application
-2. Creates necessary configuration for GitHub Pages
-3. Deploys the built assets to GitHub Pages
+1. Push your changes to GitHub
+2. Connect your repository to Vercel
+3. Configure environment variables in Vercel
+4. Deploy!
 
-Visit the live site at: [https://jevon.github.io/](https://jevon.github.io/)
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-All rights reserved.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contributors
+## Acknowledgments
 
-- Jevon MacDonald
+- Built with [Vite](https://vitejs.dev/)
+- Powered by [Google's Gemini AI](https://ai.google.dev/)
+- Styled with [TailwindCSS](https://tailwindcss.com/)
