@@ -1,0 +1,66 @@
+{
+  "category": "Other",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney's \"Other\" promises include supporting Quebec's culture and language, including intervention in Supreme Court cases, and continuing funding for Radio Canada and CBC. He also pledged to reduce federal regulation duplication and committed to building pipelines and energy infrastructure across Canada.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre's promises in the \"Other\" category focus heavily on crime and justice, including repealing existing laws, implementing mandatory life sentences for serious offenders, and banning hard drugs. He also pledges support for Francophone communities and culture, official bilingualism, and respecting Quebec's autonomy, while also committing to infrastructure improvements and reducing bureaucracy.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Preserving and funding Radio Canada/CBC and francophone community groups and cultural activities.",
+        "carney_stance": "Continue to fund Radio Canada and CBC",
+        "poilievre_stance": "Preserve and expand funding for francophone community groups and cultural activities and preserve Radio-Canada services across the country",
+        "carney_citations": [
+          "ploRXkGspys_3"
+        ],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_7",
+          "LfXDSKe_T0o_3",
+          "LfXDSKe_T0o_11"
+        ]
+      },
+      {
+        "point": "Minister responsible for official languages.",
+        "carney_stance": "Supports intervention in Supreme Court cases regarding Quebec's language law reform and ban on religious symbols.",
+        "poilievre_stance": "Reinstate the official languages position in the cabinet and appoint a minister responsible for official languages.",
+        "carney_citations": [
+          "XlUpgfy8aXk_5"
+        ],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_9",
+          "o4wvYQ1VEug_7"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Preserving and supporting Francophone culture and language.",
+        "carney_stance": "Protect the language and culture in Quebec and continue to fund Radio Canada and CBC.",
+        "poilievre_stance": "Preserve and expand funding for francophone community groups and cultural activities, maintain funding for Francophone and Quebec culture, and preserve Radio-Canada services across the country.",
+        "carney_citations": [
+          "ploRXkGspys_1",
+          "ploRXkGspys_3"
+        ],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_7",
+          "LfXDSKe_T0o_3",
+          "LfXDSKe_T0o_11"
+        ]
+      },
+      {
+        "point": "Appointing a minister responsible for official languages.",
+        "carney_stance": "Implied support through focus on Quebec's language and culture.",
+        "poilievre_stance": "Reinstate the official languages position in the cabinet and appoint a minister responsible for official languages.",
+        "carney_citations": [],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_9",
+          "o4wvYQ1VEug_7"
+        ]
+      }
+    ]
+  }
+}

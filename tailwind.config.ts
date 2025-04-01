@@ -120,7 +120,9 @@ export default {
 			fontFamily: {
 				'bebas': ['"Bebas Neue"', 'sans-serif'],
 				'oswald': ['Oswald', 'sans-serif'],
-				'montserrat': ['Montserrat', 'sans-serif']
+				'montserrat': ['Montserrat', 'sans-serif'],
+				'title': ['"Soehne Kraftig"', 'Arial', 'sans-serif'],
+				'body': ['"Financier Text"', '"Times New Roman"', 'sans-serif']
 			}
 		}
 	},

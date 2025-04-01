@@ -1,0 +1,124 @@
+{
+  "category": "Housing",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney's housing plan focuses on increasing affordability for first-time homebuyers through tax cuts, specifically eliminating the GST. He also pledges to significantly increase housing supply by building millions of homes and stimulating innovation in the construction sector, aiming for a scale of affordable housing construction not seen since WWII.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre's housing plan focuses on removing the Goods and Services Tax (GST) from new homes, particularly those under $1.3 million, to make homeownership more affordable. He also aims to incentivize municipalities to expedite building permits, free up land, and reduce development charges to stimulate more housing construction.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Eliminating GST for first-time home buyers / new homes",
+        "carney_stance": "Eliminate GST for first-time home buyers on new and substantially renovated homes under $1 million.",
+        "poilievre_stance": "Remove GST on new homes under $1.3 million.",
+        "carney_citations": [
+          "HkpzLy-rIJY_8",
+          "uH03sDpPYUk_2",
+          "T-HcnP4CWi4_1"
+        ],
+        "poilievre_citations": [
+          "N4W3hta4O48_2",
+          "vfciigh4jQA_4",
+          "unlcIjd91lg_10",
+          "xr0LZ3ZCWvk_2",
+          "owQcPYAu4v8_4",
+          "4hjNfCK9t8I_2",
+          "BOKxk8xU0bA_1",
+          "tQlCarI1s_w_5",
+          "vCrM2DIUnCs_1",
+          "KdUQKeh27Q4_3",
+          "T6fgqrF7c7g_2",
+          "NIrzwvdAqDA_5",
+          "o4wvYQ1VEug_5"
+        ]
+      },
+      {
+        "point": "Building homes",
+        "carney_stance": "Build millions of homes",
+        "poilievre_stance": "Build homes",
+        "carney_citations": [
+          "27eJz91LAi4_17",
+          "p-EwfoLgCUU_5",
+          "uH03sDpPYUk_11"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_2",
+          "d4STA-m4qVU_4",
+          "4lI0--7ES0o_2"
+        ]
+      },
+      {
+        "point": "Incentivizing municipalities to speed up permits and free up land for housing development",
+        "carney_stance": "Unspecified incentives to speed up housing development.",
+        "poilievre_stance": "Incentivize municipalities to speed up permits and cut development charges to build 15% more per year.",
+        "carney_citations": [
+          "7c9wDIQBnNc_15"
+        ],
+        "poilievre_citations": [
+          "owQcPYAu4v8_5",
+          "tQlCarI1s_w_6",
+          "T6fgqrF7c7g_11"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Eliminating or removing GST/sales tax on new homes for first-time buyers or homes under a certain price.",
+        "carney_stance": "Eliminate GST for first-time homebuyers on new and substantially renovated homes under $1 million.",
+        "poilievre_stance": "Abolish GST on new homes under $1.3 million.",
+        "carney_citations": [
+          "HkpzLy-rIJY_8",
+          "uH03sDpPYUk_2",
+          "T-HcnP4CWi4_1"
+        ],
+        "poilievre_citations": [
+          "N4W3hta4O48_2",
+          "vfciigh4jQA_4",
+          "unlcIjd91lg_10",
+          "xr0LZ3ZCWvk_2",
+          "uF48vV_rZ-M_6",
+          "owQcPYAu4v8_4",
+          "4hjNfCK9t8I_2",
+          "BOKxk8xU0bA_1",
+          "tQlCarI1s_w_5",
+          "vCrM2DIUnCs_1",
+          "KdUQKeh27Q4_3",
+          "T6fgqrF7c7g_2",
+          "NIrzwvdAqDA_5",
+          "o4wvYQ1VEug_5"
+        ]
+      },
+      {
+        "point": "Commitment to build more homes.",
+        "carney_stance": "Build millions of homes.",
+        "poilievre_stance": "Build homes.",
+        "carney_citations": [
+          "27eJz91LAi4_17",
+          "p-EwfoLgCUU_5",
+          "uH03sDpPYUk_11"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_2",
+          "d4STA-m4qVU_4",
+          "4lI0--7ES0o_2"
+        ]
+      },
+      {
+        "point": "Incentivizing municipalities to speed up building permits.",
+        "carney_stance": "Propose extraordinary additional initiatives to double the rate of housing.",
+        "poilievre_stance": "Incentivize municipalities to speed up permits and cut development charges.",
+        "carney_citations": [
+          "7c9wDIQBnNc_15"
+        ],
+        "poilievre_citations": [
+          "owQcPYAu4v8_5",
+          "tQlCarI1s_w_6",
+          "T6fgqrF7c7g_11"
+        ]
+      }
+    ]
+  }
+}

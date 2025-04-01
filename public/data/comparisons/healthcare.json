@@ -1,0 +1,73 @@
+{
+  "category": "Healthcare",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney's healthcare promises center around expanding access to dental care for Canadians. He highlights the creation and ongoing expansion of the Canadian Dental Care Plan, aiming to provide free or subsidized dental services to millions more citizens, particularly those aged 18 to 64 who cannot afford it. He emphasizes previous expansions and future potential for the program.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre's healthcare promises focus on addiction treatment and streamlining the accreditation of foreign-trained healthcare professionals. He pledges to reinvest resources into treatment and rehabilitation programs for drug users while ending taxpayer-funded opioid distribution. Poilievre also proposes a \"blue seal\" standard to facilitate the licensing and employment of immigrant doctors and nurses in Canada.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Dental Care Programs",
+        "carney_stance": "Expand and continue the Canadian Dental Care Plan to cover more Canadians.",
+        "poilievre_stance": "Protect existing dental care programs.",
+        "carney_citations": [
+          "27eJz91LAi4_4",
+          "NdkHwkN8eEk_4",
+          "3N4FF8KiyE8_5",
+          "p-EwfoLgCUU_3",
+          "eMst2T55aQY_4",
+          "uH03sDpPYUk_3"
+        ],
+        "poilievre_citations": [
+          "vCrM2DIUnCs_5"
+        ]
+      },
+      {
+        "point": "Addressing Addiction and Drug Use",
+        "carney_stance": "No explicit stance on addiction treatment mentioned in provided promises.",
+        "poilievre_stance": "Focus on reinvesting in treatment and rehabilitation for drug users, and stopping taxpayer-funded opioid distribution.",
+        "carney_citations": [],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_6",
+          "uF48vV_rZ-M_10",
+          "4hjNfCK9t8I_8",
+          "Q-6WJv4Cy5E_8"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Both candidates address dental care programs.",
+        "carney_stance": "Expand access to and coverage of existing dental care programs.",
+        "poilievre_stance": "Protect existing dental care programs.",
+        "carney_citations": [
+          "27eJz91LAi4_4",
+          "NdkHwkN8eEk_4",
+          "3N4FF8KiyE8_5",
+          "p-EwfoLgCUU_3",
+          "eMst2T55aQY_4",
+          "uH03sDpPYUk_3"
+        ],
+        "poilievre_citations": [
+          "vCrM2DIUnCs_5"
+        ]
+      },
+      {
+        "point": "Both candidates address treatment and rehabilitation related to drug use/addiction.",
+        "carney_stance": "Not explicitly mentioned in provided promises.",
+        "poilievre_stance": "Reinvest in treatment and rehabilitation for drug users, focusing on recovery and alternatives to safe supply.",
+        "carney_citations": [],
+        "poilievre_citations": [
+          "9UB9g4FfgsM_6",
+          "uF48vV_rZ-M_10",
+          "4hjNfCK9t8I_8",
+          "Q-6WJv4Cy5E_8"
+        ]
+      }
+    ]
+  }
+}

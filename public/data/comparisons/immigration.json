@@ -1,0 +1,42 @@
+{
+  "category": "Immigration",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney's immigration policy focuses on capping immigration levels. He aims to maintain immigration at or near pre-pandemic levels until housing capacity expands.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre pledges to reduce immigration levels by ending the Century Initiative, capping immigration to match housing and job growth, and focusing on eliminating abuse and fraud within the immigration system. He also commits to restoring immigration thresholds, tightening rules for deporting asylum seekers, and granting Quebec more power over temporary immigrant selection, while working with the province to allow foreign workers in targeted situations. Finally, he aims to secure borders and implement a national licensing system for immigrant professionals.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Cap immigration levels",
+        "carney_stance": "Commitment to cap immigration until it reaches sustainable pre-pandemic levels, linking it to housing expansion.",
+        "poilievre_stance": "Commitment to cap immigration so that population growth does not exceed housing stock growth and to moderate immigration levels.",
+        "carney_citations": [
+          "eMst2T55aQY_5"
+        ],
+        "poilievre_citations": [
+          "vCrM2DIUnCs_3",
+          "Q-6WJv4Cy5E_12",
+          "NIrzwvdAqDA_8"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Cap immigration levels.",
+        "carney_stance": "Commitment to cap immigration until it reaches sustainable pre-pandemic levels",
+        "poilievre_stance": "Cap immigration so that population growth does not exceed housing stock growth",
+        "carney_citations": [
+          "eMst2T55aQY_5"
+        ],
+        "poilievre_citations": [
+          "vCrM2DIUnCs_3",
+          "Q-6WJv4Cy5E_12"
+        ]
+      }
+    ]
+  }
+}

@@ -6,7 +6,7 @@ interface TopicComparisonProps {
   carneyPromises: PromiseData[];
   poilievrePromises: PromiseData[];
   selectedCategory: string | null;
-  setSelectedCategory: (category: string | null) => void;
+  onCategorySelect: (category: string | null) => void;
 }
 
 interface CategoryData {
@@ -20,7 +20,7 @@ const TopicComparison: React.FC<TopicComparisonProps> = ({
   carneyPromises, 
   poilievrePromises,
   selectedCategory,
-  setSelectedCategory
+  onCategorySelect
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -124,7 +124,7 @@ const TopicComparison: React.FC<TopicComparisonProps> = ({
             {categoryData.map(data => (
               <button 
                 key={data.category} 
-                onClick={() => setSelectedCategory(selectedCategory === data.category ? null : data.category)}
+                onClick={() => onCategorySelect(selectedCategory === data.category ? null : data.category)}
                 className={`flex flex-col items-center rounded-lg p-3 transition-all
                   ${selectedCategory === data.category 
                     ? 'bg-white border border-rose/20' 
@@ -161,7 +161,7 @@ const TopicComparison: React.FC<TopicComparisonProps> = ({
               .map(category => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                  onClick={() => onCategorySelect(selectedCategory === category ? null : category)}
                   className={`px-3 py-1 rounded-full text-sm transition-all
                     ${selectedCategory === category 
                       ? 'bg-white border border-rose/20 text-gray-800' 

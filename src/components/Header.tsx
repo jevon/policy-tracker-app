@@ -8,6 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ activePolitician, onPoliticianChange }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,10 +89,16 @@ const Header: React.FC<HeaderProps> = ({ activePolitician, onPoliticianChange })
                 <span className="absolute -bottom-2.5 left-1/2 transform -translate-x-1/2 text-poilievre text-xs lg:hidden">▼</span>
               </button>
             </div>
-            <div className="text-gray-600 text-sm mt-4 font-montserrat text-center max-w-xl animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <div className="text-gray-600 text-sm mt-4 text-center max-w-xl animate-fade-in" style={{ animationDelay: '0.5s' }}>
               Track and compare political promises made during the 2025 Canadian election cycle
             </div>
           </div>
+        </div>
+      )}
+
+      {showHelp && (
+        <div className="text-gray-600 text-sm mt-4 text-center max-w-xl animate-fade-in" style={{ animationDelay: '0.5s' }}>
+          Use the buttons above or swipe left/right to switch between candidates. Click on categories to compare policies. Click promise cards for details and sources.
         </div>
       )}
     </>

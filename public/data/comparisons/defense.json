@@ -1,0 +1,111 @@
+{
+  "category": "Defense",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney's defense promises focus on bolstering Canadian sovereignty and security through increased military presence and modernized equipment. Key commitments include strengthening Arctic defenses with new radar systems, troops, and icebreakers, as well as investing in new technologies like drones and submarines to enhance naval and border security capabilities. Carney also pledges to reach NATO defense spending targets, improve recruitment for the Canadian Armed Forces, and foster international defense cooperation.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre's defense platform focuses on bolstering border security and Arctic sovereignty. Key commitments include hiring 2,000 more CBSA officers, acquiring four new icebreakers, establishing a new Arctic military base, and investing in high-powered scanners for border inspections. He also pledges to rebuild the military through increased recruitment and new equipment.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Arctic military presence and capabilities",
+        "carney_stance": "Reinforce Arctic sovereignty with new radar systems, troops, Arctic class destroyers, and military installations.",
+        "poilievre_stance": "Establish a new military base in the Arctic and buy four massive ice breakers.",
+        "carney_citations": [
+          "XlUpgfy8aXk_4",
+          "HkpzLy-rIJY_2",
+          "9iOIG8w2wI4_1",
+          "XW6otNpfOWw_2"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_19",
+          "4hjNfCK9t8I_10",
+          "Q-6WJv4Cy5E_11",
+          "T6fgqrF7c7g_9",
+          "T6fgqrF7c7g_13",
+          "46XYbFKG23Y_4"
+        ]
+      },
+      {
+        "point": "Border Security Enhancement",
+        "carney_stance": "Strengthen the security of Canadian ports with increased personnel and new technologies.",
+        "poilievre_stance": "Secure ports with high-powered scanners and additional CBSA officers.",
+        "carney_citations": [
+          "XlUpgfy8aXk_2",
+          "9iOIG8w2wI4_1"
+        ],
+        "poilievre_citations": [
+          "N4W3hta4O48_1",
+          "4hjNfCK9t8I_9",
+          "Q-6WJv4Cy5E_9"
+        ]
+      },
+      {
+        "point": "Rebuilding/Strengthening the Military",
+        "carney_stance": "Build a stronger and better equipped Canadian military, including modernizing NORAD and expanding Navy capabilities.",
+        "poilievre_stance": "Rebuild the military with new equipment.",
+        "carney_citations": [
+          "27eJz91LAi4_14",
+          "HkpzLy-rIJY_2",
+          "HkpzLy-rIJY_3"
+        ],
+        "poilievre_citations": [
+          "vfciigh4jQA_7",
+          "xr0LZ3ZCWvk_4",
+          "4hjNfCK9t8I_10",
+          "T6fgqrF7c7g_9"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Increasing Arctic presence and sovereignty.",
+        "carney_stance": "Reinforce Arctic sovereignty with new radar systems, troops, and Arctic class destroyers; Modernize NORAD and increase Canadian Armed Forces presence in the Arctic; Investment in the Arctic for military presence and border surveillance.",
+        "poilievre_stance": "Buy four massive ice breakers; Reinvest in Canadian Armed Forces and build a post-Cold War base in the Arctic; Establish a new base in the Arctic and support veterans; Add more troops and purchase additional icebreakers for the Canadian Armed Forces.",
+        "carney_citations": [
+          "XlUpgfy8aXk_4",
+          "HkpzLy-rIJY_2",
+          "9iOIG8w2wI4_1",
+          "SKd85qzjdUE_1"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_19",
+          "Q-6WJv4Cy5E_11",
+          "T6fgqrF7c7g_9",
+          "T6fgqrF7c7g_13",
+          "46XYbFKG23Y_4",
+          "4hjNfCK9t8I_10"
+        ]
+      },
+      {
+        "point": "Bolstering border security and securing ports.",
+        "carney_stance": "Strengthen the security of Canadian ports, increase personnel, and use new technologies to combat trafficking of drugs, illegal guns, and stolen cars.",
+        "poilievre_stance": "Lock up car thieves and secure ports with high-powered scanners and additional CBSA officers; Increase border security with high-powered scanners and more officers; Hire 2,000 more Frontline CBSA officers and enhance border inspections.",
+        "carney_citations": [
+          "XlUpgfy8aXk_2"
+        ],
+        "poilievre_citations": [
+          "N4W3hta4O48_1",
+          "4hjNfCK9t8I_9",
+          "Q-6WJv4Cy5E_9"
+        ]
+      },
+      {
+        "point": "Rebuilding/Strengthening the military.",
+        "carney_stance": "Build a stronger and better equipped Canadian military.",
+        "poilievre_stance": "Rebuild military and secure borders; Rebuild the military; Rebuild the armed forces with new icebreakers, a new military base in the Far North, and support for veterans.",
+        "carney_citations": [
+          "27eJz91LAi4_14"
+        ],
+        "poilievre_citations": [
+          "vfciigh4jQA_7",
+          "xr0LZ3ZCWvk_4",
+          "T6fgqrF7c7g_9"
+        ]
+      }
+    ]
+  }
+}

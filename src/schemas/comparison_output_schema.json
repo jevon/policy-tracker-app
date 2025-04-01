@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComparisonOutput",
+  "description": "Schema for the AI-generated comparison data.",
+  "type": "object",
+  "properties": {
+    "category": { "type": "string", "minLength": 1 },
+    "candidateA": { "$ref": "#/definitions/candidateSummary" },
+    "candidateB": { "$ref": "#/definitions/candidateSummary" },
+    "comparison": {
+      "type": "object",
+      "properties": {
+        "differences": { "$ref": "#/definitions/comparisonPointArray" },
+        "similarities": { "$ref": "#/definitions/comparisonPointArray" }
+      },
+      "required": ["differences", "similarities"]
+    }
+  },
+  "required": ["category", "candidateA", "candidateB", "comparison"],
+  "definitions": {
+    "candidateSummary": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string" } 
+      },
+      "required": ["name", "summary"]
+    },
+    "comparisonPoint": {
+      "type": "object",
+      "properties": {
+        "point": { "type": "string", "minLength": 1 },
+        "carney_stance": { "type": "string" },
+        "poilievre_stance": { "type": "string" },
+        "carney_citations": { "$ref": "#/definitions/stringArray" },
+        "poilievre_citations": { "$ref": "#/definitions/stringArray" }
+      },
+      "required": ["point", "carney_stance", "poilievre_stance", "carney_citations", "poilievre_citations"]
+    },
+    "comparisonPointArray": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/comparisonPoint" }
+    },
+    "stringArray": {
+        "type": "array",
+        "items": { "type": "string" }
+    }
+  }
+} 

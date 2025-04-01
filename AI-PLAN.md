@@ -23,36 +23,39 @@
 
 3.  **Build-Time Generation Script (`scripts/generate-comparisons.ts`):**
     *   **Setup:**
-        *   Create the `scripts` directory if it doesn't exist.
-        *   Install necessary Node.js packages:
+        *   [X] Create the `scripts` directory if it doesn't exist.
+        *   [X] Install necessary Node.js packages:
             *   `npm install --save-dev @google/generative-ai dotenv typescript @types/node ts-node` (or use `yarn add --dev ...`)
+        *   [X] Create `scripts/generate-comparisons.ts` with initial boilerplate (imports, constants, basic structure).
     *   **Logic:**
-        *   Load environment variables using `dotenv`.
-        *   Validate that `GEMINI_API_KEY` is present.
-        *   Initialize the Gemini client (`@google/generative-ai`).
-        *   Read and parse `src/data/carneyPromises.json` and `src/data/poilievrePromises.json`.
-        *   Define the list of categories (from `promises_schema.json`: "Economy", "Healthcare", "Environment", "Defense", "Education", "Immigration", "Housing", "Other").
-        *   Loop through each category:
-            *   Filter promises from both files matching the current category.
-            *   Concatenate the relevant promise text (`description` or `quote`) for each candidate within that category.
-            *   Construct specific prompts for the Gemini API to:
-                1.  Summarize Candidate A's promises for the category.
-                2.  Summarize Candidate B's promises for the category.
-                3.  Identify key differences: For each difference, describe the point of divergence and briefly state the relevant stance of each candidate that illustrates this difference. Request output as a list of objects, each containing `point`, `carney_stance`, and `poilievre_stance`.
-                4.  Identify key similarities: Similarly, for each similarity, describe the point of convergence and the relevant stance/approach of each candidate. Request output as a list of objects with `point`, `carney_stance`, and `poilievre_stance`.
-            *   Make API calls to Gemini for each prompt.
-            *   Implement appropriate error handling and potentially retries for API calls.
-            *   Structure the results into the agreed-upon JSON format.
-            *   Create a URL-friendly `category_slug` (e.g., "Healthcare" -> "healthcare").
-            *   Ensure the output directory `public/data/comparisons/` exists (create if needed).
-            *   Write the structured JSON output to `public/data/comparisons/{category_slug}.json`.
-    *   **Execution:** This script will be run *before* the main application build step.
+        *   [X] Load environment variables using `dotenv`.
+        *   [X] Validate that `GEMINI_API_KEY` is present.
+        *   [X] Initialize the Gemini client (`@google/generative-ai`).
+        *   [X] Read and parse `src/data/carneyPromises.json` and `src/data/poilievrePromises.json`.
+        *   [ ] **Enhancement:** Ensure each promise has a unique, stable `id` (verify existing fallback or add to source data).
+        *   [X] Define the list of categories (from `promises_schema.json`: "Economy", "Healthcare", "Environment", "Defense", "Education", "Immigration", "Housing", "Other").
+        *   [X] Loop through each category:
+            *   [X] Filter promises and format input for Gemini as structured data (including `id` and text).
+            *   [X] Construct specific prompts for the Gemini API to:
+                1.  Summarize Candidate A's promises.
+                2.  Summarize Candidate B's promises.
+                3.  Identify key differences: Ask for point, stances, and citation IDs. Constraint: Only points where both have positions.
+                4.  Identify key similarities: Ask for point, stances, and citation IDs. Constraint: Only points where both have positions.
+            *   [X] Make API calls to Gemini for summary, diffs, and sims prompts.
+            *   [X] Implement appropriate error handling.
+            *   [X] Structure the results into JSON, including citation fields.
+            *   [X] Create a URL-friendly `category_slug` (e.g., "Healthcare" -> "healthcare").
+            *   [X] Ensure the output directory `public/data/comparisons/` exists (create if needed).
+            *   [X] Write the structured JSON output to `public/data/comparisons/{category_slug}.json`.
+    *   **Execution:**
+        *   [X] This script will be run *before* the main application build step.
+        *   [X] Successfully tested script execution locally (`npx ts-node ...`).
 
 4.  **Output Data Structure (`public/data/comparisons/{category_slug}.json`):**
     *   Each file will contain:
         ```json
         {
-          "category": "Category Name", // e.g., "Healthcare"
+          "category": "Category Name",
           "candidateA": {
             "name": "Mark Carney", // Hardcode or make dynamic
             "summary": "Overall AI-generated summary for Carney..."
@@ -66,7 +69,9 @@
               {
                 "point": "AI-identified point of difference",
                 "carney_stance": "AI summary of Carney's stance on this specific point",
-                "poilievre_stance": "AI summary of Poilievre's stance on this specific point"
+                "poilievre_stance": "AI summary of Poilievre's stance on this specific point",
+                "carney_citations": ["id1", "id2"],
+                "poilievre_citations": ["id3"]
               }
               // ... other difference objects
             ],
@@ -74,7 +79,9 @@
               {
                 "point": "AI-identified point of similarity",
                 "carney_stance": "AI summary of Carney's stance on this specific point",
-                "poilievre_stance": "AI summary of Poilievre's stance on this specific point"
+                "poilievre_stance": "AI summary of Poilievre's stance on this specific point",
+                "carney_citations": ["id4"],
+                "poilievre_citations": ["id5", "id6"]
               }
               // ... other similarity objects
             ] // Similarities array might be empty
@@ -82,34 +89,50 @@
         }
         ```
 
-5.  **Frontend Integration (`src/components/CategoryComparison.tsx` or similar):**
-    *   **Trigger:** User selects a category from the UI.
-    *   **Data Fetching:**
-        *   Get the `category_slug` corresponding to the selected category.
-        *   Construct the path: `/data/comparisons/${category_slug}.json`.
-        *   Use `fetch` API (e.g., in a `useEffect` hook) to load the JSON file.
-    *   **State Management:** Use `useState` to store fetched data, loading status, and errors.
-    *   **Rendering:** 
-        *   Display the overall AI-generated summaries (`candidateA.summary`, `candidateB.summary`).
-        *   Iterate through the `comparison.differences` array. For each object, display the `point`, and underneath or alongside it, display the `carney_stance` and `poilievre_stance`.
-        *   Iterate through the `comparison.similarities` array similarly, displaying the `point`, `carney_stance`, and `poilievre_stance` for each.
-        *   **Below the AI comparison section,** display the original two-column list showing the individual promises for each candidate in the selected category (similar to the current implementation, likely fetching/filtering from the original `carneyPromises.json`/`poilievrePromises.json` data if needed, or incorporating promise details into the generated JSON).
-        *   Handle loading/error UI for both the AI comparison and the promise list.
+5.  **Frontend Integration (`src/pages/Index.tsx`, `src/components/TopicComparison.tsx`, `src/components/CategoryDetailView.tsx`):**
+    *   **State Management (in `src/pages/Index.tsx`):**
+        *   [X] Add `useState` hooks to manage the fetched AI comparison data (`comparisonData`), loading state (`isComparisonLoading`), and potential fetch errors (`comparisonError`).
+        *   [X] Add derived state (e.g., using `useMemo`) to hold the filtered lists of Carney and Poilievre promises based on the `selectedCategory`.
+    *   **Data Fetching (in `src/pages/Index.tsx`):**
+        *   [X] Add a `useEffect` hook that runs when the `selectedCategory` state changes.
+        *   [X] Inside the `useEffect`, fetch the corresponding `/data/comparisons/{categorySlug}.json` file and manage loading/error states.
+    *   **Props Drilling (from `src/pages/Index.tsx` to `src/components/CategoryDetailView.tsx`):**
+        *   [ ] **New:** Pass the full `carneyPromises` and `poilievrePromises` lists down to `CategoryDetailView`.
+    *   **New Component (`src/components/CategoryDetailView.tsx`):**
+        *   [X] Update props interface to accept full promise lists.
+        *   [X] Update internal interfaces (`ComparisonPoint`) to include citation arrays.
+        *   [X] Implement rendering logic:
+            *   [X] Handle loading/error states.
+            *   [X] Display summaries, differences, similarities.
+            *   [X] Within Differences/Similarities, render citations.
+            *   [X] Display the two-column raw promise list.
+    *   **URL Handling (in `src/pages/Index.tsx` and `src/components/TopicComparison.tsx`):**
+        *   [X] Create `handleCategorySelect` in `Index.tsx` to update state and URL (`history.pushState`).
+        *   [X] Pass `handleCategorySelect` to `TopicComparison` instead of `setSelectedCategory`.
+        *   [X] Update `TopicComparison` props and `onClick` handlers to use `onCategorySelect`.
+        *   [X] Read `?category=` URL parameter on initial load in `Index.tsx` and set initial state.
+        *   [X] Add `popstate` event listener in `Index.tsx` to handle browser back/forward navigation.
+    *   **Conditional Rendering (in `src/pages/Index.tsx`):**
+        *   [X] Below the `<TopicComparison />` component, add a conditional block that renders `<CategoryDetailView />` *only when* `selectedCategory` is not null.
+        *   [X] Pass the required props (`comparisonData`, `isComparisonLoading`, `comparisonError`, and the derived *filtered* promise lists) to `<CategoryDetailView />`.
+    *   **Rendering (`src/components/TopicComparison.tsx`):**
+        *   [X] This component remains largely unchanged, focusing on category selection/overview.
+        *   [X] Ensure it correctly receives and uses `selectedCategory` and `setSelectedCategory` props.
+    *   **Note:** The main page (`Index.tsx`) renders the full, unfiltered promise list when no category is selected.
 
 6.  **Build Process Integration:**
-    *   Add/modify scripts in `package.json`:
+    *   [X] Add/modify scripts in `package.json`:
         ```json
         "scripts": {
           // ... other scripts
           "generate-comparisons": "ts-node ./scripts/generate-comparisons.ts",
-          "build": "npm run generate-comparisons && next build" // Adjust build command as needed (e.g., vite build)
+          "build": "npm run generate-comparisons && vite build" // Adjusted for Vite
         }
         ```
-    *   Ensure the build command in the deployment pipeline runs the combined command.
+    *   [X] Ensure the build command in the deployment pipeline runs the combined command.
 
 **Next Steps:**
 
-*   Implement Step 3: Create and write the `scripts/generate-comparisons.ts` file.
-*   Implement Step 5: Create or modify the frontend component to fetch and display the data.
-*   Implement Step 6: Update `package.json`.
-*   Test the build process and the frontend display. 
+*   [X] Implement Step 5: Create or modify the frontend component to fetch and display the data.
+*   [X] Implement Step 6: Update `package.json`.
+*   [X] Test the build process and the frontend display. 

@@ -8,7 +8,34 @@ import poilievrePromisesData from '@/data/poilievrePromises.json';
 import { useSwipe } from '@/hooks/useSwipe';
 import SwipeIndicator from '@/components/SwipeIndicator';
 import TopicComparison from '@/components/TopicComparison';
+import CategoryDetailView from '@/components/CategoryDetailView';
 import Modal from '@/components/Modal';
+
+// --- Interfaces for AI Comparison Data (Reverted) ---
+interface ComparisonPoint {
+    point: string;
+    carney_stance: string;
+    poilievre_stance: string;
+    carney_citations: string[];
+    poilievre_citations: string[];
+}
+
+interface ComparisonOutput {
+    category: string;
+    candidateA: {
+        name: string;
+        summary: string;
+    };
+    candidateB: {
+        name: string;
+        summary: string;
+    };
+    comparison: {
+        differences: ComparisonPoint[];
+        similarities: ComparisonPoint[];
+    };
+}
+// --- End Interfaces ---
 
 const Index = () => {
   const [mounted, setMounted] = useState(false);
@@ -16,6 +43,11 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [activePolitician, setActivePolitician] = useState<'carney' | 'poilievre'>('carney');
   const [selectedPromise, setSelectedPromise] = useState<{ promise: PromiseData; politician: 'carney' | 'poilievre' } | null>(null);
+  
+  // State for AI comparison data
+  const [comparisonData, setComparisonData] = useState<ComparisonOutput | null>(null);
+  const [isComparisonLoading, setIsComparisonLoading] = useState<boolean>(false);
+  const [comparisonError, setComparisonError] = useState<string | null>(null);
   
   // Memoize promise data processing
   const carneyPromises: PromiseData[] = useMemo(() => carneyPromisesData.map((promise) => ({
@@ -47,22 +79,32 @@ const Index = () => {
     ...poilievrePromises.map(promise => promise.category)
   ].filter(Boolean) as string[]));
   
-  const filterPromises = (promises: PromiseData[]): PromiseData[] => {
+  // Filter promises based *only* on search term (for the main list view)
+  const filterBySearchTerm = (promises: PromiseData[]): PromiseData[] => {
     return promises.filter(promise => {
       const matchesSearch = 
         !searchTerm ||
         promise.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (promise.quote && promise.quote.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (promise.category && promise.category.toLowerCase().includes(searchTerm.toLowerCase()));
-      
+        (promise.quote && promise.quote.toLowerCase().includes(searchTerm.toLowerCase()));
+        // Removed category matching here, as it's handled separately
       return matchesSearch;
     });
   };
-  
-  const filteredCarneyPromises = filterPromises(carneyPromises);
-  const filteredPoilievrePromises = filterPromises(poilievrePromises);
+  const filteredCarneyPromisesBySearch = filterBySearchTerm(carneyPromises);
+  const filteredPoilievrePromisesBySearch = filterBySearchTerm(poilievrePromises);
 
-  // Group promises by date
+  // Derive promises filtered by the *selected category*
+  const filteredCarneyPromisesForCategory = useMemo(() => {
+      if (!selectedCategory) return [];
+      return carneyPromises.filter(p => p.category === selectedCategory);
+  }, [selectedCategory, carneyPromises]);
+
+  const filteredPoilievrePromisesForCategory = useMemo(() => {
+      if (!selectedCategory) return [];
+      return poilievrePromises.filter(p => p.category === selectedCategory);
+  }, [selectedCategory, poilievrePromises]);
+
+  // Group promises by date (using search-filtered lists for the main view)
   const groupPromisesByDate = (promises: PromiseData[]): Record<string, PromiseData[]> => {
     return promises.reduce((acc, promise) => {
       const date = promise.transcript_date || 'Unknown Date';
@@ -74,10 +116,10 @@ const Index = () => {
     }, {} as Record<string, PromiseData[]>);
   };
 
-  const carneyGroupedPromises = groupPromisesByDate(filteredCarneyPromises);
-  const poilievreGroupedPromises = groupPromisesByDate(filteredPoilievrePromises);
+  const carneyGroupedPromises = groupPromisesByDate(filteredCarneyPromisesBySearch);
+  const poilievreGroupedPromises = groupPromisesByDate(filteredPoilievrePromisesBySearch);
 
-  // Get all unique dates
+  // Get all unique dates (based on search-filtered lists)
   const allDates = Array.from(new Set([
     ...Object.keys(carneyGroupedPromises),
     ...Object.keys(poilievreGroupedPromises)
@@ -105,12 +147,58 @@ const Index = () => {
     minSwipeDistance: 50,
   });
 
-  // Handle initial mount effect - now checks for URL directly via sessionStorage
+  // --- Category Selection Handler with URL Update ---
+  const handleCategorySelect = (category: string | null) => {
+    const currentCategory = selectedCategory; // Store current before update
+    setSelectedCategory(category);
+
+    // Update URL
+    const url = new URL(window.location.href);
+    const categorySlug = category ? category.toLowerCase().replace(/\s+/g, '-') : null;
+
+    if (categorySlug) {
+        // Only push state if the category actually changed to avoid duplicate history entries
+        if (category !== currentCategory) {
+            url.searchParams.set('category', categorySlug);
+            window.history.pushState({ category: categorySlug }, '', url.toString());
+        }
+    } else {
+        // If deselecting, remove the parameter and go back to base path
+        url.searchParams.delete('category');
+        window.history.pushState({}, '', url.pathname); // Use pathname to clear query string
+    }
+  };
+  // --- End Category Selection Handler ---
+
+  // Handle initial mount effect - includes reading category from URL
   useEffect(() => {
     console.log("Initial Mount Effect: Running");
-    setMounted(true);
+    
+    // Check for category in URL *before* mounting
+    const params = new URLSearchParams(window.location.search);
+    const categorySlugFromUrl = params.get('category');
+    let initialCategory: string | null = null;
 
-    // Try to get promise ID from sessionStorage (set by direct URL if available)
+    if (categorySlugFromUrl) {
+        console.log(`Initial Mount Effect: Found category slug in URL: ${categorySlugFromUrl}`);
+        // Find the full category name matching the slug
+        initialCategory = allCategories.find(cat => cat.toLowerCase().replace(/\s+/g, '-') === categorySlugFromUrl) || null;
+        if (initialCategory) {
+            console.log(`Initial Mount Effect: Setting initial category state to: ${initialCategory}`);
+            setSelectedCategory(initialCategory); // Set state *before* mount
+        } else {
+            console.warn(`Initial Mount Effect: Category slug "${categorySlugFromUrl}" found in URL but does not match known categories.`);
+            // Optionally clear the invalid URL param
+            const url = new URL(window.location.href);
+            url.searchParams.delete('category');
+            window.history.replaceState({}, '', url.pathname);
+        }
+    }
+
+    setMounted(true); // Now mount the component
+
+    // Note: If both promise and category are in URL, category takes precedence for view, 
+    // but promise modal might still open if ID matches.
     const promiseId = sessionStorage.getItem('selectedPromiseId');
     console.log(`Initial Mount Effect: checking for promise ID in sessionStorage: ${promiseId}`);
 
@@ -141,7 +229,71 @@ const Index = () => {
     blueTexture.src = `${basePath}uploads/bg-blue-texture.png`;
     redTexture.src = `${basePath}uploads/bg-red-texture.png`;
 
-  }, [carneyPromises, poilievrePromises]); // Depends on promise data to find promise
+    // Add popstate listener to handle back/forward navigation for category
+    const handlePopState = (event: PopStateEvent) => {
+        const stateCategorySlug = event.state?.category;
+        const categoryFromSlug = allCategories.find(cat => cat.toLowerCase().replace(/\s+/g, '-') === stateCategorySlug) || null;
+        console.log(`Popstate event: Setting category to ${categoryFromSlug} (from slug: ${stateCategorySlug})`);
+        setSelectedCategory(categoryFromSlug); // Update state based on history state
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+
+    // Dependencies: allCategories is needed to map slug back to name
+  }, [allCategories, carneyPromises, poilievrePromises]); 
+
+  // --- Fetch AI Comparison Data --- 
+  useEffect(() => {
+    if (selectedCategory) {
+      const fetchComparisonData = async () => {
+        setIsComparisonLoading(true);
+        setComparisonError(null);
+        setComparisonData(null); // Clear previous data
+
+        const categorySlug = selectedCategory.toLowerCase().replace(/\s+/g, '-');
+        const url = `/data/comparisons/${categorySlug}.json`;
+        
+        console.log(`Fetching comparison data for ${selectedCategory} from ${url}`);
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            // If file not found (404), it likely means no comparison was generated (e.g., no promises in category)
+            // Treat this as a non-error case, but with no data.
+            if (response.status === 404) {
+                console.log(`Comparison file not found for ${selectedCategory} (slug: ${categorySlug}). No comparison data available.`);
+                setComparisonData(null);
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+          } else {
+            const data: ComparisonOutput = await response.json();
+            setComparisonData(data);
+            console.log(`Successfully fetched comparison data for ${selectedCategory}`);
+          }
+        } catch (error) {
+          console.error("Error fetching comparison data:", error);
+          setComparisonError(`Failed to load comparison data for ${selectedCategory}.`);
+          setComparisonData(null);
+        } finally {
+          setIsComparisonLoading(false);
+        }
+      };
+
+      fetchComparisonData();
+    } else {
+      // Clear data if no category is selected
+      setComparisonData(null);
+      setIsComparisonLoading(false);
+      setComparisonError(null);
+    }
+  }, [selectedCategory]);
+  // --- End Fetch AI Comparison Data ---
 
   if (!mounted) {
     return <div className="min-h-screen bg-beige"></div>;
@@ -160,24 +312,24 @@ const Index = () => {
           <div className="inline-block px-3 py-1 bg-rose/20 backdrop-blur-sm rounded-full text-gray-800 text-sm font-medium mb-4 animate-fade-in">
             2025 FEDERAL ELECTION REALTIME PLATFORMS
           </div>
-          <h2 className="text-3xl md:text-4xl font-bebas tracking-wide mb-4 animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-title tracking-wide mb-4 animate-fade-in">
             CAMPAIGN PLATFORM TRACKER
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto font-montserrat animate-fade-in">
+          <p className="text-gray-600 max-w-2xl mx-auto animate-fade-in">
             Comprehensive analysis of policy commitments by Mark Carney and Pierre Poilievre. 
             Each entry includes official statements, source documentation, and reference links.
           </p>
           <div className="flex justify-center gap-6 mt-4">
             <a 
               href="/how-it-works" 
-              className="inline-block text-gray-500 hover:text-gray-700 text-sm font-montserrat transition-colors duration-200 animate-fade-in"
+              className="inline-block text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 animate-fade-in"
               style={{ animationDelay: '0.8s' }}
             >
               How does this work? →
             </a>
             <a 
               href="/why-important" 
-              className="inline-block text-gray-500 hover:text-gray-700 text-sm font-montserrat transition-colors duration-200 animate-fade-in"
+              className="inline-block text-gray-500 hover:text-gray-700 text-sm transition-colors duration-200 animate-fade-in"
               style={{ animationDelay: '0.9s' }}
             >
               Why is this important? →
@@ -189,72 +341,58 @@ const Index = () => {
           carneyPromises={carneyPromises}
           poilievrePromises={poilievrePromises}
           selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          onCategorySelect={handleCategorySelect}
         />
         
-        {/* Temporarily removed search bar
-        <PromiseSearch 
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          categories={allCategories}
-        />
-        */}
+        {/* --- Conditional Rendering for Category Detail --- */} 
+        {selectedCategory && (
+            <CategoryDetailView 
+                comparisonData={comparisonData}
+                isLoading={isComparisonLoading}
+                error={comparisonError}
+                filteredCarneyPromises={filteredCarneyPromisesForCategory}
+                filteredPoilievrePromises={filteredPoilievrePromisesForCategory}
+                allCarneyPromises={carneyPromises}
+                allPoilievrePromises={poilievrePromises}
+                onCitationClick={setSelectedPromise}
+            />
+        )}
+        {/* --- End Conditional Rendering --- */} 
+
+        {/* Render the full promise lists (potentially grouped by date) when NO category is selected */} 
+        {!selectedCategory && (
+            <div className="flex flex-col lg:flex-row gap-8 mt-8"> { /* Added margin top */}
+                <div className={`w-full lg:w-1/2 transition-all duration-300 ${activePolitician === 'carney' ? 'block' : 'hidden lg:block'}`}>
+                    {allDates.map(date => (
+                        <div key={`carney-${date}`} className="mb-4 last:mb-0">
+                        <PoliticianColumn 
+                            promises={carneyGroupedPromises[date] || []}
+                            politician="carney"
+                            backgroundImage={`${import.meta.env.BASE_URL}uploads/bg-red-texture.png`}
+                            date={date}
+                            onPromiseClick={(promise) => setSelectedPromise({ promise, politician: 'carney' })}
+                        />
+                        </div>
+                    ))}
+                </div>
+                
+                <div className={`w-full lg:w-1/2 transition-all duration-300 ${activePolitician === 'poilievre' ? 'block' : 'hidden lg:block'}`}>
+                     {allDates.map(date => (
+                        <div key={`poilievre-${date}`} className="mb-4 last:mb-0">
+                        <PoliticianColumn 
+                            promises={poilievreGroupedPromises[date] || []}
+                            politician="poilievre"
+                            backgroundImage={`${import.meta.env.BASE_URL}uploads/bg-blue-texture.png`}
+                            date={date}
+                            onPromiseClick={(promise) => setSelectedPromise({ promise, politician: 'poilievre' })}
+                        />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )}
+        {/* --- End Full Promise List Rendering --- */} 
         
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className={`w-full lg:w-1/2 transition-all duration-300 ${activePolitician === 'carney' ? 'block' : 'hidden lg:block'}`}>
-            {Object.keys(carneyGroupedPromises).sort((a, b) => {
-              if (a === 'Unknown Date') return 1;
-              if (b === 'Unknown Date') return -1;
-              return new Date(b).getTime() - new Date(a).getTime();
-            }).map(date => (
-              <div key={date} className="mb-4 last:mb-0">
-                <PoliticianColumn 
-                  promises={carneyGroupedPromises[date]}
-                  politician="carney"
-                  backgroundImage={`${import.meta.env.BASE_URL}uploads/bg-red-texture.png`}
-                  category={selectedCategory}
-                  date={date}
-                  onPromiseClick={(promise) => {
-                    setSelectedPromise({ promise, politician: 'carney' });
-                    // Create shareable URL with the promise ID
-                    const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
-                    const shareUrl = `${baseUrl}?promise=${promise.id}`;
-                    // For copy-to-clipboard functionality if needed later
-                    sessionStorage.setItem('promiseShareUrl', shareUrl);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-          
-          <div className={`w-full lg:w-1/2 transition-all duration-300 ${activePolitician === 'poilievre' ? 'block' : 'hidden lg:block'}`}>
-            {Object.keys(poilievreGroupedPromises).sort((a, b) => {
-              if (a === 'Unknown Date') return 1;
-              if (b === 'Unknown Date') return -1;
-              return new Date(b).getTime() - new Date(a).getTime();
-            }).map(date => (
-              <div key={date} className="mb-4 last:mb-0">
-                <PoliticianColumn 
-                  promises={poilievreGroupedPromises[date]}
-                  politician="poilievre"
-                  backgroundImage={`${import.meta.env.BASE_URL}uploads/bg-blue-texture.png`}
-                  category={selectedCategory}
-                  date={date}
-                  onPromiseClick={(promise) => {
-                    setSelectedPromise({ promise, politician: 'poilievre' });
-                    // Create shareable URL with the promise ID
-                    const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
-                    const shareUrl = `${baseUrl}?promise=${promise.id}`;
-                    // For copy-to-clipboard functionality if needed later
-                    sessionStorage.setItem('promiseShareUrl', shareUrl);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
       
       <footer className="mt-24 py-8 border-t border-gray-200">

@@ -1,0 +1,74 @@
+{
+  "category": "Environment",
+  "candidateA": {
+    "name": "Mark Carney",
+    "summary": "Mark Carney pledges a balanced approach to energy, aiming to build Canada into an energy superpower through both conventional and clean sources. He commits to making \"big polluters pay\" instead of individuals, maintaining an emissions cap while prioritizing emissions reduction through investment, particularly in carbon capture and storage projects and renewable energy such as hydroelectric in Nunavut. He also supports building pipelines and energy infrastructure.\n"
+  },
+  "candidateB": {
+    "name": "Pierre Poilievre",
+    "summary": "Pierre Poilievre's environmental policy focuses on dismantling existing carbon pricing mechanisms and regulations hindering resource development. He pledges to abolish the carbon tax entirely, repeal laws obstructing pipeline construction and resource extraction, and reverse forestry restrictions. Poilievre also commits to approving various energy projects, including nuclear power, pipelines, mines, and LNG plants.\n"
+  },
+  "comparison": {
+    "differences": [
+      {
+        "point": "Carbon Tax",
+        "carney_stance": "Eliminated the consumer carbon tax but aims to make big polluters pay.",
+        "poilievre_stance": "Aims to axe/abolish the carbon tax completely.",
+        "carney_citations": [
+          "27eJz91LAi4_3",
+          "27eJz91LAi4_16",
+          "p-EwfoLgCUU_6"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_8",
+          "4hjNfCK9t8I_3",
+          "KdUQKeh27Q4_2",
+          "vCrM2DIUnCs_7"
+        ]
+      },
+      {
+        "point": "Pipelines and Energy Infrastructure",
+        "carney_stance": "Committed to building pipelines and energy infrastructure.",
+        "poilievre_stance": "Aims to repeal laws that prevent new pipelines and approve pipelines.",
+        "carney_citations": [
+          "nOywu3XgHPc_5"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_11",
+          "vCrM2DIUnCs_7",
+          "NIrzwvdAqDA_6"
+        ]
+      }
+    ],
+    "similarities": [
+      {
+        "point": "Addressing the carbon tax",
+        "carney_stance": "Eliminated the consumer carbon tax and plans to make big polluters pay instead.",
+        "poilievre_stance": "Axe/Abolish the carbon tax.",
+        "carney_citations": [
+          "27eJz91LAi4_3",
+          "27eJz91LAi4_16",
+          "p-EwfoLgCUU_6"
+        ],
+        "poilievre_citations": [
+          "unlcIjd91lg_8",
+          "4hjNfCK9t8I_3",
+          "KdUQKeh27Q4_2",
+          "vCrM2DIUnCs_7"
+        ]
+      },
+      {
+        "point": "Commitment to building energy infrastructure",
+        "carney_stance": "Committed to building pipelines and energy infrastructure, including carbon capture projects.",
+        "poilievre_stance": "Approve nuclear power plants, pipelines, mines, and LNG plants.",
+        "carney_citations": [
+          "nOywu3XgHPc_5",
+          "7c9wDIQBnNc_14"
+        ],
+        "poilievre_citations": [
+          "vCrM2DIUnCs_7"
+        ]
+      }
+    ]
+  }
+}
